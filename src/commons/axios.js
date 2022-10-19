@@ -7,8 +7,23 @@ const axios = baseURL => {
         timeout: 1000
     });
 
+
+    instance.interceptors.request.use(   //攔截器:攔截裡面請求的request
+        config => {   
+            const jwToken = global.auth.getToken();   //取得jwToken
+            config.headers['Authorization'] = 'Bearer ' + jwToken;   //放入headers
+            // Do something before request is sent
+            return config;
+        },  
+        error => {
+            // Do something with request error
+            //console.log(error)
+            return Promise.reject(error);
+        }
+    );
+
     return instance;
-}
+};
 
 export { axios };
 export default axios();

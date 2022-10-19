@@ -4,7 +4,7 @@ import { formatPrice } from 'commons/helper';
 import EditInventory from 'components/EditInventory';
 import axios from 'commons/axios';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 
 class Product extends React.Component{
 
@@ -24,14 +24,13 @@ class Product extends React.Component{
     };
 
     addCart = async () => {
-        const navigate = useNavigate();
         if (!global.auth.isLogin()) {   //查看是否登入 
-            navigate('/login');
             toast.info('Please Login First')
             return;
         }
 
         try{
+            const user = global.auth.getUser() || {};   ///取得使用這用戶來獲取不同使用者的cart
             const { id, name, image, price } = this.props.product;   //取得商品內容
 
             const res = await axios.get(`/carts?productId=${id}`);   //異步函數 等待非同步 由axios.get帶入carts的productId是否=${id}
@@ -48,7 +47,8 @@ class Product extends React.Component{
                     name,
                     image,
                     price,
-                    mount: 1
+                    mount: 1,
+                    userId: user.email
                 };
                 await axios.post('/carts', cart);   //新增/carts資料庫 cart內容
                 
@@ -59,6 +59,21 @@ class Product extends React.Component{
             toast.error('Add Cart Failed');   ////toast 彈出組件  新增購物車失敗
         }
     };
+
+    renderMangerBtn = () => {   //管理使用者權限的渲覽視圖
+        const user = global.auth.getUser() || {}   //如果為空給它空字串
+        if (user.type === 1) {
+            return(
+                <div className="p-head has-text-right" onClick={this.toEdit}>
+                    <span className="icon edit-btn">
+                        <i className="fa-solid fa-sliders"></i>
+                    </span>
+                </div>
+            )
+        }
+        
+        
+    }
 
     render(){
         const { name, image, tags, price, status } = this.props.product;
@@ -71,11 +86,7 @@ class Product extends React.Component{
         return(
             <div className={_pClass[status]}>
                 <div className="p-content">
-                    <div className="p-head has-text-right" onClick={this.toEdit}>
-                        <span className="icon edit-btn">
-                            <i className="fa-solid fa-sliders"></i>
-                        </span>
-                    </div>
+                    {this.renderMangerBtn()}
                     <div className="img-wrapper" >
                         {status === 'unavailable' ? <p className="out-stock-text" >Out Of Stock</p> : ''}
                         

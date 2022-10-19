@@ -1,10 +1,11 @@
 import React from 'react';
 import axios from 'commons/axios';
 import { CSSTransition, TransitionGroup} from 'react-transition-group';
-import ToolBox from 'components/ToolBox';
+//import ToolBox from 'components/ToolBox';
 import Product from 'components/Product';
 import Panel from 'components/Panel';
 import AddInventory from 'components/AddInventory';
+import ToolBoxCopy from 'components/ToolBoxCopy';
 
 class Products extends React.Component{
     
@@ -140,8 +141,13 @@ class Products extends React.Component{
         });
     };
 
-    initCartNum = async () => {    
-        const res = await axios.get('/carts');   //等待非同步 由axios.get拿到列表資料
+    initCartNum = async () => {    ///購物車數量
+        const user = global.auth.getUser() || {};   ///取得使用這用戶來獲取不同使用者的cart來更改數量
+        const res = await axios.get('/carts', {    //等待非同步 由axios.get拿到列表資料
+            params: {
+                userId: user.email
+            }
+        });   
         const carts = res.data || [];   //res.data不為空
         const cartNum = carts
             .map(cart => cart.mount)   //取得cart.mount的值  >[2, 1, 1]
@@ -152,7 +158,7 @@ class Products extends React.Component{
     render(){
         return(
             <div>
-                <ToolBox search={this.search} cartNum={this.state.cartNum} />
+                <ToolBoxCopy search={this.search} cartNum={this.state.cartNum} />
             
                 <div className="products">
                     <div className="columns is-multiline is-desktop">
@@ -170,7 +176,11 @@ class Products extends React.Component{
                         </TransitionGroup>
                         
                     </div>
-                    <button className="button is-primary add-btn" onClick={this.toAdd}>Add</button>
+
+                    {(global.auth.getUser() || {}).type === 1 && (   //管理使用者權限的渲覽視圖
+                        <button className="button is-primary add-btn" onClick={this.toAdd}>Add</button>
+                    )}
+                    
                 </div>
             </div>
         );

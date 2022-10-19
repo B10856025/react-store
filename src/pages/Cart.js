@@ -9,7 +9,8 @@ const Cart = () => {
     const [carts, setCarts] = useState([]);   //useState函數傳遞參數  >>用hook定義state狀態
 
     useEffect( () => {
-        axios.get('/carts').then(res => setCarts(res.data));
+        const user = global.auth.getUser() || {};   ///取得使用這用戶來獲取不同使用者的cart
+        axios.get(`/carts?userId=${user.email}`).then(res => setCarts(res.data));   //根據userId(user的email)來判斷
     }, []);
 
     const totalPrice = useMemo(() => {

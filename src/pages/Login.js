@@ -22,8 +22,8 @@ export default function Login(props){
         //3.處理登入邏輯
         
         try {
-            const { email, password } = data
-            const res = await axios.post('/auth/login', { email, password })   //post的請求
+            const { email, password } = data;
+            const res = await axios.post('/auth/login', { email, password }) ;  //post的請求
             const jwToken = res.data;
             console.log(jwToken);
             global.auth.setToken(jwToken) ;  //保存jwToken在本地瀏覽器的存儲
@@ -32,6 +32,7 @@ export default function Login(props){
             navigate('/');
             
         } catch (error) {
+            console.log(error)
             const message = error.response.data.message;
             toast.error(message);
         }

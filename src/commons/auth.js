@@ -11,7 +11,7 @@ const getToken = token => {   //取得token
 
 const isLogin = () => {   //是否登入
     const jwToken = getToken();
-    return !!jwToken && !isTokenExpired();   //jwToken有值並且沒有超期
+    return !!jwToken && !isTokenExpired(jwToken);   //jwToken有值並且沒有超期
 };
 
 const isTokenExpired = token => {   ///token是否過期
@@ -43,5 +43,6 @@ global.auth = {
     setToken,
     getUser,
     logout,
-    isLogin
+    isLogin,
+    getToken
 };
