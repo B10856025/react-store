@@ -23,7 +23,7 @@ export default function Register(props){
         
         try {
             const { nickname, email, password } = data;
-            const res = await axios.post('/auth/register', { nickname, email, password, type: 0 })   //post的請求
+            const res = await axios.post('auth/register', { nickname, email, password, type: 0 })   //post的請求
             const jwToken = res.data;   //註冊成功會獲得一個jwToken
             global.auth.setToken(jwToken) ;  //保存jwToken在本地瀏覽器的存儲
             toast.success('Register Success');
