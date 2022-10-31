@@ -33,7 +33,7 @@ const Header = props => {
                     <i className="fa-solid fa-bars" onClick={toBars}/>
                 </div>
                 <div className="left"> 
-                    <Link to="/" i className="fa-solid fa-house" > H o m e</Link>
+                    <Link to="/" i className="fa-solid fa-house" > 二   拾   衣   世   紀</Link>
                 </div>
                 <div className="right">
                     {props.user.nickname ? (
@@ -43,7 +43,7 @@ const Header = props => {
                         </span>
                     ):(
                         <React.Fragment>
-                            <Link to="/login">L o g i n </Link>
+                            <Link to="/login">Login </Link>
                             <Link to="/register">Register</Link>
                         </React.Fragment>
                     )}

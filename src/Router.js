@@ -5,6 +5,8 @@ import Login from 'pages/Login';
 import NotFound from 'pages/NotFound';
 import Cart from 'pages/Cart';
 import Register from 'pages/Register'
+import Products from 'components/Products'
+import Form from 'components/Form'
 
 const Router = () => (
     <BrowserRouter>
@@ -14,6 +16,8 @@ const Router = () => (
             <Route path="/cart" element={<Cart />} />
             <Route path="*" element={<NotFound />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/form" element={<Form />} />
         </Routes>
     </BrowserRouter>
 )

@@ -6,6 +6,7 @@ import Product from 'components/Product';
 import Panel from 'components/Panel';
 import AddInventory from 'components/AddInventory';
 import ToolBoxCopy from 'components/ToolBoxCopy';
+import Layout from 'Layout';
 
 class Products extends React.Component{
     
@@ -157,6 +158,7 @@ class Products extends React.Component{
 
     render(){
         return(
+            <Layout>
             <div>
                 <ToolBoxCopy search={this.search} cartNum={this.state.cartNum} />
             
@@ -183,6 +185,7 @@ class Products extends React.Component{
                     
                 </div>
             </div>
+            </Layout>
         );
     }
 }

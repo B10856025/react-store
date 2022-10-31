@@ -33,7 +33,7 @@ export default function Login(props){
             
         } catch (error) {
             console.log(error)
-            const message = error.response.data.message;
+            const message = error.res.data.message;
             toast.error(message);
         }
         

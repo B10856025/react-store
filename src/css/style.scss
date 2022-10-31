@@ -452,3 +452,75 @@ body {
     width: 100%;
   }
 }
+
+
+
+//-----------HomePage----------
+.HomePage {
+  width: 100%;
+  font-size: 60px;
+  text-align: center;
+
+  display: flex;
+  /* 水平置中 */
+  justify-content: center;    
+  /* 垂直置中 */
+  align-content: center;      
+  flex-wrap: wrap;
+  .block1{
+    background: rgb(247, 175, 175);
+    padding: 10rem;
+    width: 85%;
+  }
+  .block2{
+    background: rgb(162, 181, 233);
+    padding: 10rem;
+    width: 85%;
+  }
+  .block3{
+    background: rgb(191, 146, 209);
+    padding: 10rem;
+    width: 85%;
+  }
+  .slide-container{
+    
+    background-position: center;
+    background-size: cover;
+    width: 85%;
+    height: 85%;;
+    
+    
+  }
+  
+}
+
+//-----------Form----------
+.form{
+  text-align: center;
+  font-size: 30px;
+  text-align: center;
+  
+  max-width: 1500px;
+  margin: auto;
+  .label {
+    color: rgb(191, 146, 209);
+    width: 80%;
+    font-weight: 600;
+    font-size: 40px;
+    text-align: center;
+  }
+  .label-line {
+    color: rgb(166, 209, 146);
+    width: 80%;
+    font-weight: 600;
+    font-size: 40px;
+    text-align: center;
+  }
+  .text {
+    color: rgb(7, 7, 7);
+    width: 80%;
+    font-weight: 600;
+    font-size: 40px;
+    text-align: left;
+  }
+}

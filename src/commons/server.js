@@ -7,16 +7,34 @@ const router = jsonServer.router(path.join(__dirname, 'db.json'));   //把db.jso
 const middleWares = jsonServer.defaults();   //中間鍵
 server.use(jsonServer.bodyParser);   //解析器 解析發送的一些數據
 server.use(middleWares);
-
+{/*
 const getUsersDb = () => {
     return JSON.parse(
         fs.readFileSync(path.join(__dirname, 'users.json'), 'UTF-8')
     );
+};*/}
+
+const getUsersDb = () => {
+    return JSON.parse(
+        mongodb.readFileSync(path.join(react_base, 'users'), 'UTF-8')
+    );
+    
 };
+
+async function loadPostsCollection() {   ///創建函數  來在路由中連接到collection
+    const client = await mongodb.MongoClient.connect   //等待處理異步數據 連接到數據庫
+    ('mongodb://localhost:27017', {
+        // useNewUrlParser: true
+    });
+    console.log(123)
+    return client.db('react_base').collection('user');   //傳回react_base資料庫的products資料集
+}
+
+
 
 const isAuthenticated = ({email, password}) => {   //找尋email和password是否被註冊過
     return (
-        getUsersDb().users.findIndex(   //得到數字串
+        loadPostsCollection().users.findIndex(   //得到數字串
             user => user.email === email && user.password === password   //驗證是否一樣
         ) !==-1   //相等會大於1 不相等會=-1
     );
@@ -24,7 +42,7 @@ const isAuthenticated = ({email, password}) => {   //找尋email和password是�
 
 const isExist = ({email}) => {   //找尋email是否有一樣的
     return (
-        getUsersDb().users.findIndex(   //得到數字串
+        loadPostsCollection().users.findIndex(   //得到數字串
             user => user.email === email   //驗證是否一樣
         ) !==-1   //相等會大於1 不相等會=-1
     );
@@ -43,7 +61,7 @@ server.post('/auth/login', (req, res) => {
 
     if (isAuthenticated({email, password})){   //校驗驗證
 
-        const user = getUsersDb().users.find(
+        const user = loadPostsCollection().users.find(
             u => u.email === email && u.password === password
         );
         const { nickname, type } = user;
